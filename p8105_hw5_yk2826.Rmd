@@ -136,3 +136,25 @@ baltimore_prop_tidy %>%
 ```
 
 From the resulting dataframe and the above table, the estimated proportion of homicides that are unsolved in Baltimore is 0.646, and the 95% confidence interval is (0.628, 0.663).
+
+Create a tidy dataframe with estimated proportions of unsolved homicides and CIs for each city:
+
+```{r prop_ci_cities}
+prop_tidy = function(df){
+  prop_test = prop.test(df$n_unsolved, df$n_total)
+  broom::tidy(prop_test)
+}
+
+city_state_nest = nest(homicide_number, n_total:n_unsolved)
+
+prop_ci = 
+  city_state_nest %>% 
+  mutate(prop_unsolved = map(data, prop_tidy)) %>% 
+  unnest() %>% 
+  janitor::clean_names() %>% 
+  select(city_state, estimate, conf_low, conf_high)
+prop_ci
+```
+
+I wrote a function called prop_tidy that runs prop.test for each of the cities, saves the result to an object called prop_test and then applys the broom::tidy to this object. I created a dataframe containing a list column. Then I used map to iterate over the list column and finally created a tidy dataframe with estimated proportions and CIs for each city.
+
