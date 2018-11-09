@@ -106,3 +106,33 @@ homicide_number
 ```
 
 I created a dataset called homicide_city_state containing a city_state variable, and then group by city_state and summarise to obtain the resulting dataframe.
+
+For the city of Baltimore, MD:
+
+First, estimate the proportion of homicides that are unsolved.
+
+```{r estimate_Baltimore}
+baltimore_data = 
+  homicide_number %>% 
+  filter(city_state == "Baltimore,MD") 
+prop.test(baltimore_data$n_unsolved, baltimore_data$n_total)
+```
+
+Then, save the output of prop.test as an R object, apply the broom::tidy to this object and pull the estimated proportion and confidence intervals from the resulting tidy dataframe.
+
+```{r prop_ci_baltimore}
+baltimore_prop_tidy = 
+  prop.test(baltimore_data$n_unsolved, baltimore_data$n_total) %>% 
+  broom::tidy() %>% 
+  janitor::clean_names()
+baltimore_prop_tidy
+
+baltimore_prop_tidy %>% 
+  select(estimate, conf_low, conf_high) %>% 
+  rename(Estimate = estimate, 
+         "Lower limit" = conf_low, 
+         "Upper limit" = conf_high) %>% 
+  knitr::kable()
+```
+
+From the resulting dataframe and the above table, the estimated proportion of homicides that are unsolved in Baltimore is 0.646, and the 95% confidence interval is (0.628, 0.663).
