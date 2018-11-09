@@ -16,6 +16,8 @@ theme_set(theme_bw() + theme(legend.position = "bottom"))
 
 ## Problem 1
 
+### Import and tidy data
+
 Create a tidy dataframe containing data from all participants:
 
 First, start with a dataframe containing all file names and read in data:
@@ -49,6 +51,8 @@ longitudinal_tidy
 str(longitudinal_tidy)
 ```
 
+### Spaghetti plot
+
 Make a spaghetti plot showing observations on each subject over time, and comment on differences between groups:
 
 ```{r spaghetti_plot}
@@ -66,7 +70,11 @@ longitudinal_tidy %>%
 
 From the sphaghetti plot, the experimental group and control group had similar observations at baseline. However, the observations of subjects in experimental group are generally higher than observations of subjects in control group through 8 weeks. The difference between two groups increased over time since subjects assigned to the experimental arm had increasing observation values across weeks while subjects assigned to the control arm had relatively constant observation values.
 
+I find this plot is clear than two-panel plot with each individual having different colors.
+
 ## Problem 2
+
+### Import data
 
 First, load and describe the row data:
 
@@ -88,6 +96,8 @@ victim_age: the age of the victim;
 victim_sex: the sex of the victim;  
 city, state, lat, lon:  the location of the killing;  
 disposition: whether the case was closed and whether an arrest was made.
+
+### Number of total and unsolved homicides
 
 Create a city_state variable and then summarize within cities to obtain the total number of homicides and the number of unsolved homicides:
 
@@ -157,6 +167,8 @@ prop_ci
 ```
 
 I wrote a function called prop_tidy that runs prop.test for each of the cities, saves the result to an object called prop_test and then applys the broom::tidy to this object. I created a dataframe containing a list column. Then I used map to iterate over the list column and finally created a tidy dataframe with estimated proportions and CIs for each city.
+
+### Errorbar plot
 
 Create a plot that shows the estimates and CIs for each city:
 
