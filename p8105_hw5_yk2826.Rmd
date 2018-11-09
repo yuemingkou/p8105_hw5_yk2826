@@ -14,3 +14,37 @@ knitr::opts_chunk$set(
 theme_set(theme_bw() + theme(legend.position = "bottom"))
 ```
 
+## Problem 1
+
+Create a tidy dataframe containing data from all participants:
+
+First, start with a dataframe containing all file names and read in data:
+
+```{r load_data, message = FALSE}
+longitudinal_df = 
+  tibble(file_names = list.files("./data/")) %>% 
+  mutate(subject_data = map(str_c("./data/", file_names), read_csv))
+```
+
+Then, tidy the dataset:
+
+```{r tidy_data}
+longitudinal_tidy = 
+  longitudinal_df %>% 
+  unnest %>% 
+  mutate(file_names = str_replace(file_names, ".csv", "")) %>% 
+  separate(file_names, into = c("arm", "subject_ID"), sep = "_") %>% 
+  mutate(arm = str_replace(arm, "con", "control"),
+         arm = str_replace(arm, "exp", "experimental")) %>% 
+  gather(key = week, value = observation, week_1:week_8) %>% 
+  mutate(week = str_replace(week, "week_", ""),
+         week = as.integer(week)) %>% 
+  arrange(arm, subject_ID)
+```
+
+Look at the resulting dataset:
+
+```{r check_result}
+longitudinal_tidy
+str(longitudinal_tidy)
+```
