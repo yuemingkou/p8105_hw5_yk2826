@@ -1,0 +1,16 @@
+---
+title: "Homework 5"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(rvest)
+knitr::opts_chunk$set(
+  fig.width = 9,
+  fig.asp = .8,
+  out.width = "90%"
+)
+theme_set(theme_bw() + theme(legend.position = "bottom"))
+```
+
