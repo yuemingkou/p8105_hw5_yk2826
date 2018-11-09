@@ -65,3 +65,26 @@ longitudinal_tidy %>%
 ```
 
 From the sphaghetti plot, the experimental group and control group had similar observations at baseline. However, the observations of subjects in experimental group are generally higher than observations of subjects in control group through 8 weeks. The difference between two groups increased over time since subjects assigned to the experimental arm had increasing observation values across weeks while subjects assigned to the control arm had relatively constant observation values.
+
+## Problem 2
+
+First, load and describe the row data:
+
+```{r load_homicide, message = FALSE}
+homicide_df = read_csv("./homicide-data.csv")
+homicide_df
+```
+
+The Washington Post homicide dataset contains `r nrow(homicide_df)` observations, where each observation is a case of homicide.
+
+There are 12 variables in this dataset:  
+
+uid: homicide identifier;  
+reported_date: the date on which the killing was reported;  
+victim_last: the last name of the victim;  
+victim_first: the first name of the victim;  
+victim_race: the race of the victim;  
+victim_age: the age of the victim;  
+victim_sex: the sex of the victim;  
+city, state, lat, lon:  the location of the killing;  
+disposition: whether the case was closed and whether an arrest was made.
