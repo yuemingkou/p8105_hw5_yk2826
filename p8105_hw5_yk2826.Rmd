@@ -158,3 +158,19 @@ prop_ci
 
 I wrote a function called prop_tidy that runs prop.test for each of the cities, saves the result to an object called prop_test and then applys the broom::tidy to this object. I created a dataframe containing a list column. Then I used map to iterate over the list column and finally created a tidy dataframe with estimated proportions and CIs for each city.
 
+Create a plot that shows the estimates and CIs for each city:
+
+```{r errorbar}
+prop_ci %>% 
+  mutate(city_state = fct_reorder(city_state, desc(estimate))) %>% 
+  ggplot(aes(x = city_state, y = estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = conf_low, ymax = conf_high)) +
+  theme(axis.text.x = element_text(angle = 80, hjust = 1)) +
+  labs(title = "Estimated proportion and 95% CI of unsolved cases in 50 large US cities", 
+       y = "Proportion of unsolved cases", 
+       x = "City and State", 
+       caption = "Data from the Washington Post") 
+```
+
+The above plot shows the estimate and 95% CI of proportion of unsolved homicides for each city, ordered from most to least. Chicago has the highest proportion of unsolved cases, while Richmond has the lowest proportion of unsolved cases. 
