@@ -48,3 +48,20 @@ Look at the resulting dataset:
 longitudinal_tidy
 str(longitudinal_tidy)
 ```
+
+Make a spaghetti plot showing observations on each subject over time, and comment on differences between groups:
+
+```{r spaghetti_plot}
+longitudinal_tidy %>% 
+  mutate(ID = str_c(arm, "_", subject_ID)) %>% 
+  ggplot(aes(x = week, y = observation, group = ID, color = arm)) + 
+    geom_line() + 
+    labs(
+      title = "Observations on each subject over time",
+      x = "Week",
+      y = "Observation",
+      caption = "Data from the longitudinal study"
+    ) 
+```
+
+From the sphaghetti plot, the experimental group and control group had similar observations at baseline. However, the observations of subjects in experimental group are generally higher than observations of subjects in control group through 8 weeks. The difference between two groups increased over time since subjects assigned to the experimental arm had increasing observation values across weeks while subjects assigned to the control arm had relatively constant observation values.
