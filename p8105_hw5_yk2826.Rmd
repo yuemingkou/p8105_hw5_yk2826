@@ -88,3 +88,21 @@ victim_age: the age of the victim;
 victim_sex: the sex of the victim;  
 city, state, lat, lon:  the location of the killing;  
 disposition: whether the case was closed and whether an arrest was made.
+
+Create a city_state variable and then summarize within cities to obtain the total number of homicides and the number of unsolved homicides:
+
+```{r summarize_city}
+homicide_city_state = 
+  homicide_df %>%  
+  mutate(city_state = str_c(city, ",", state)) 
+
+homicide_number = 
+  homicide_city_state %>% 
+  group_by(city_state) %>%
+  summarise(n_total = n(), 
+            n_unsolved = sum(disposition %in% c("Closed without arrest", "Open/No arrest"))) %>% 
+  filter(!(n_unsolved == 0))
+homicide_number
+```
+
+I created a dataset called homicide_city_state containing a city_state variable, and then group by city_state and summarise to obtain the resulting dataframe.
