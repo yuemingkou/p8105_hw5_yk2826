@@ -70,7 +70,7 @@ longitudinal_tidy %>%
 
 From the sphaghetti plot, the experimental group and control group had similar observations at baseline. However, the observations of subjects in experimental group are generally higher than observations of subjects in control group through 8 weeks. The difference between two groups increased over time since subjects assigned to the experimental arm had increasing observation values across weeks while subjects assigned to the control arm had relatively constant observation values.
 
-I find this plot is clear than two-panel plot with each individual having different colors.
+I find this plot is clearer for comparing observations between groups than two-panel plot with each individual having different colors.
 
 ## Problem 2
 
